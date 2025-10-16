@@ -1,0 +1,24 @@
+@use "../styles/variables" as *;
+
+.layout-root {
+  min-height: 100vh;
+  background: $bg-color;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.layout-content {
+  flex: 1;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: $bg-color;
+  min-height: calc(100vh - 64px);
+}
