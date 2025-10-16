@@ -20,7 +20,7 @@
   }
 
   p {
-    color: $text-light;
+     color: $text-secondary;
     font-size: $font-size-base;
     margin: 0;
   }
@@ -42,13 +42,14 @@
     font-size: $font-size-base;
 
     .required {
-      color: $danger-color;
+      color: #E53935;
       margin-left: 4px;
     }
   }
 
   input[type="text"],
   input[type="date"],
+  input[type="email"],
   select {
     @include input-base;
   }

@@ -14,22 +14,23 @@
 // Estilos globais
 body {
   background: $bg-color;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: $font-family;
   color: $text-color;
   margin: 0;
   padding: 0;
+  font-size: $text-size;
+  font-weight: $font-weight-normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   min-height: 100vh;
-  padding: $spacing-xl;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-// Utilitários
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -45,3 +46,28 @@ body {
 .mb-3 { margin-bottom: $spacing-md; }
 .mb-4 { margin-bottom: $spacing-lg; }
 .mb-5 { margin-bottom: $spacing-xl; }
+
+// Card padrão
+.card {
+  background: $white;
+  border-radius: $radius-card-lg;
+  box-shadow: $card-shadow;
+  padding: 1.5rem;
+  margin-bottom: $spacing-lg;
+}
+
+// Botões
+.btn {
+  border-radius: $radius-btn;
+  font-family: $font-family;
+  font-weight: $font-weight-medium;
+  font-size: $text-size;
+}
+.btn-primary {
+  background: $primary-color;
+  color: $white;
+}
+.btn-secondary {
+  background: $button-secondary-bg;
+  color: $button-secondary-text;
+}
