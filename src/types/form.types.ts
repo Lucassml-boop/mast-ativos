@@ -1,5 +1,6 @@
 export interface FormData {
   nomeUsuario: string;
+  email: string;
   departamento: string;
   temHeadset: boolean;
   headsetDesde: string;
@@ -13,7 +14,7 @@ export interface FormData {
 export interface FormInputProps {
   id: string;
   label: string;
-  type?: 'text' | 'date';
+  type?: 'text' | 'date' | 'email';
   placeholder?: string;
   value: string;
   onChange: (value: string) => void;
