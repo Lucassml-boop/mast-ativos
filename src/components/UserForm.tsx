@@ -1,17 +1,12 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-
-interface FormData {
-  nomeUsuario: string;
-  departamento: string;
-  temHeadset: boolean;
-  headsetDesde: string;
-  temMouse: boolean;
-  mouseDesde: string;
-  suporteNotebook: boolean;
-  bolsa: boolean;
-  cargo: string;
-}
+import type { FormData } from '../types/form.types';
+import FormInput from './FormInput';
+import FormSelect from './FormSelect';
+import CheckboxWithDate from './CheckboxWithDate';
+import SimpleCheckbox from './SimpleCheckbox';
+import FormButtons from './FormButtons';
+import { DEPARTAMENTOS } from '../constants/departamentos';
 
 export default function UserForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -56,156 +51,93 @@ export default function UserForm() {
       <form onSubmit={handleSubmit}>
         <div className="form-grid">
           {/* Nome do Usuário */}
-          <div className="form-group">
-            <label htmlFor="nomeUsuario">
-              Nome do Usuário
-              <span className="required">*</span>
-            </label>
-            <input
-              type="text"
-              id="nomeUsuario"
-              placeholder="Digite o nome completo"
-              value={formData.nomeUsuario}
-              onChange={(e) => setFormData({ ...formData, nomeUsuario: e.target.value })}
+          <FormInput
+            id="nomeUsuario"
+            label="Nome do Usuário"
+            placeholder="Digite o nome completo"
+            value={formData.nomeUsuario}
+            onChange={(value) => setFormData({ ...formData, nomeUsuario: value })}
+            required
+          />
+
+          {/* Departamento e Cargo */}
+          <div className="form-row">
+            <FormSelect
+              id="departamento"
+              label="Departamento"
+              value={formData.departamento}
+              onChange={(value) => setFormData({ ...formData, departamento: value })}
+              options={DEPARTAMENTOS}
+              required
+            />
+
+            <FormInput
+              id="cargo"
+              label="Cargo"
+              placeholder="Ex: Analista, Gerente..."
+              value={formData.cargo}
+              onChange={(value) => setFormData({ ...formData, cargo: value })}
               required
             />
           </div>
 
-          {/* Departamento e Cargo */}
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="departamento">
-                Departamento
-                <span className="required">*</span>
-              </label>
-              <select
-                id="departamento"
-                value={formData.departamento}
-                onChange={(e) => setFormData({ ...formData, departamento: e.target.value })}
-                required
-              >
-                <option value="">Selecione...</option>
-                <option value="TI">Tecnologia da Informação</option>
-                <option value="RH">Recursos Humanos</option>
-                <option value="Financeiro">Financeiro</option>
-                <option value="Comercial">Comercial</option>
-                <option value="Operações">Operações</option>
-                <option value="Marketing">Marketing</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="cargo">
-                Cargo
-                <span className="required">*</span>
-              </label>
-              <input
-                type="text"
-                id="cargo"
-                placeholder="Ex: Analista, Gerente..."
-                value={formData.cargo}
-                onChange={(e) => setFormData({ ...formData, cargo: e.target.value })}
-                required
-              />
-            </div>
-          </div>
-
-          {/* Headset */}
+          {/* Equipamentos */}
           <div className="checkbox-group">
             <label className="checkbox-label">Equipamentos</label>
             
-            <div className="checkbox-item">
-              <input
-                type="checkbox"
-                id="temHeadset"
-                checked={formData.temHeadset}
-                onChange={(e) => setFormData({ 
+            <CheckboxWithDate
+              id="temHeadset"
+              label="Tem Headset"
+              checked={formData.temHeadset}
+              onCheckedChange={(checked) => 
+                setFormData({ 
                   ...formData, 
-                  temHeadset: e.target.checked,
-                  headsetDesde: e.target.checked ? formData.headsetDesde : ''
-                })}
-              />
-              <label htmlFor="temHeadset">Tem Headset</label>
-            </div>
+                  temHeadset: checked,
+                  headsetDesde: checked ? formData.headsetDesde : ''
+                })
+              }
+              dateValue={formData.headsetDesde}
+              onDateChange={(date) => setFormData({ ...formData, headsetDesde: date })}
+            />
 
-            {formData.temHeadset && (
-              <div className="form-group" style={{ marginLeft: '30px' }}>
-                <label htmlFor="headsetDesde">Desde</label>
-                <div className="date-input-wrapper">
-                  <input
-                    type="date"
-                    id="headsetDesde"
-                    value={formData.headsetDesde}
-                    onChange={(e) => setFormData({ ...formData, headsetDesde: e.target.value })}
-                  />
-                </div>
-              </div>
-            )}
-
-            <div className="checkbox-item">
-              <input
-                type="checkbox"
-                id="temMouse"
-                checked={formData.temMouse}
-                onChange={(e) => setFormData({ 
+            <CheckboxWithDate
+              id="temMouse"
+              label="Tem Mouse"
+              checked={formData.temMouse}
+              onCheckedChange={(checked) => 
+                setFormData({ 
                   ...formData, 
-                  temMouse: e.target.checked,
-                  mouseDesde: e.target.checked ? formData.mouseDesde : ''
-                })}
-              />
-              <label htmlFor="temMouse">Tem Mouse</label>
-            </div>
-
-            {formData.temMouse && (
-              <div className="form-group" style={{ marginLeft: '30px' }}>
-                <label htmlFor="mouseDesde">Desde</label>
-                <div className="date-input-wrapper">
-                  <input
-                    type="date"
-                    id="mouseDesde"
-                    value={formData.mouseDesde}
-                    onChange={(e) => setFormData({ ...formData, mouseDesde: e.target.value })}
-                  />
-                </div>
-              </div>
-            )}
+                  temMouse: checked,
+                  mouseDesde: checked ? formData.mouseDesde : ''
+                })
+              }
+              dateValue={formData.mouseDesde}
+              onDateChange={(date) => setFormData({ ...formData, mouseDesde: date })}
+            />
           </div>
 
           {/* Outros Itens */}
           <div className="checkbox-group">
             <label className="checkbox-label">Outros Itens</label>
             
-            <div className="checkbox-item">
-              <input
-                type="checkbox"
-                id="suporteNotebook"
-                checked={formData.suporteNotebook}
-                onChange={(e) => setFormData({ ...formData, suporteNotebook: e.target.checked })}
-              />
-              <label htmlFor="suporteNotebook">Suporte de Notebook</label>
-            </div>
+            <SimpleCheckbox
+              id="suporteNotebook"
+              label="Suporte de Notebook"
+              checked={formData.suporteNotebook}
+              onChange={(checked) => setFormData({ ...formData, suporteNotebook: checked })}
+            />
 
-            <div className="checkbox-item">
-              <input
-                type="checkbox"
-                id="bolsa"
-                checked={formData.bolsa}
-                onChange={(e) => setFormData({ ...formData, bolsa: e.target.checked })}
-              />
-              <label htmlFor="bolsa">Bolsa</label>
-            </div>
+            <SimpleCheckbox
+              id="bolsa"
+              label="Bolsa"
+              checked={formData.bolsa}
+              onChange={(checked) => setFormData({ ...formData, bolsa: checked })}
+            />
           </div>
         </div>
 
         {/* Botões */}
-        <div className="form-actions">
-          <button type="button" className="btn btn-secondary" onClick={handleReset}>
-            Limpar
-          </button>
-          <button type="submit" className="btn btn-primary">
-            Cadastrar
-          </button>
-        </div>
+        <FormButtons onReset={handleReset} />
       </form>
     </div>
   );
