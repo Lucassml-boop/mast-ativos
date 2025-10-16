@@ -1,4 +1,6 @@
 // Mixins e Funções
+@use "./variables" as *;
+
 @mixin flex-center {
   display: flex;
   justify-content: center;

@@ -1,6 +1,7 @@
 // Estilos do Formulário
 @use "./variables" as *;
 @use "./mixins" as *;
+@use "sass:color";
 
 .form-container {
   @include card;
@@ -143,7 +144,7 @@
   color: $white;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 8%);
+    background: color.adjust($primary-color, $lightness: -8%);
     box-shadow: $shadow-md;
   }
 }
