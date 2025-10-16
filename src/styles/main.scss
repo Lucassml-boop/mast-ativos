@@ -1,0 +1,47 @@
+// Importação de variáveis e mixins (usando @use ao invés de @import)
+@use "./variables" as *;
+@use "./mixins" as *;
+@use "sass:color";
+
+// Importar estilos de componentes
+@use "./form";
+
+// Reset básico
+* {
+  box-sizing: border-box;
+}
+
+// Estilos globais
+body {
+  background: $bg-color;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  color: $text-color;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  padding: $spacing-xl;
+}
+
+// Utilitários
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-1 { margin-bottom: $spacing-xs; }
+.mb-2 { margin-bottom: $spacing-sm; }
+.mb-3 { margin-bottom: $spacing-md; }
+.mb-4 { margin-bottom: $spacing-lg; }
+.mb-5 { margin-bottom: $spacing-xl; }

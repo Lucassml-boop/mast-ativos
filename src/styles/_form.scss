@@ -1,0 +1,159 @@
+// Estilos do Formulário
+@use "./variables" as *;
+@use "./mixins" as *;
+
+.form-container {
+  @include card;
+  max-width: 800px;
+  margin: $spacing-xl auto;
+}
+
+.form-header {
+  margin-bottom: $spacing-xl;
+  text-align: center;
+
+  h1 {
+    color: $text-color;
+    font-size: $font-size-2xl;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  p {
+    color: $text-light;
+    font-size: $font-size-base;
+    margin: 0;
+  }
+}
+
+.form-grid {
+  display: grid;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.form-group {
+  @include flex-column;
+  gap: $spacing-xs;
+
+  label {
+    font-weight: 600;
+    color: $text-color;
+    font-size: $font-size-base;
+
+    .required {
+      color: $danger-color;
+      margin-left: 4px;
+    }
+  }
+
+  input[type="text"],
+  input[type="date"],
+  select {
+    @include input-base;
+  }
+
+  select {
+    cursor: pointer;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-md;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.checkbox-group {
+  @include flex-column;
+  gap: $spacing-sm;
+
+  .checkbox-label {
+    font-weight: 600;
+    color: $text-color;
+    margin-bottom: $spacing-xs;
+  }
+
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    border-radius: $radius-md;
+    @include transition(background);
+
+    &:hover {
+      background: $bg-color;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: $primary-color;
+    }
+
+    label {
+      cursor: pointer;
+      font-weight: 400;
+      margin: 0;
+    }
+  }
+}
+
+.date-input-wrapper {
+  position: relative;
+  
+  input[type="date"] {
+    &:disabled {
+      background: $bg-color;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+}
+
+.form-actions {
+  @include flex-center;
+  gap: $spacing-md;
+  padding-top: $spacing-lg;
+  border-top: 1px solid $border-color;
+}
+
+.btn {
+  padding: $spacing-sm $spacing-xl;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $font-size-base;
+  font-weight: 600;
+  cursor: pointer;
+  @include transition(all);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  background: $primary-color;
+  color: $white;
+
+  &:hover:not(:disabled) {
+    background: darken($primary-color, 8%);
+    box-shadow: $shadow-md;
+  }
+}
+
+.btn-secondary {
+  background: $white;
+  color: $secondary-color;
+  border: 1px solid $border-color;
+
+  &:hover:not(:disabled) {
+    background: $bg-color;
+  }
+}
