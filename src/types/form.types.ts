@@ -1,6 +1,7 @@
 export interface FormData {
   nomeUsuario: string;
   email: string;
+  nomeMaquina?: string;
   departamento: string;
   temHeadset: boolean;
   headsetDesde: string;

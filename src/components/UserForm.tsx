@@ -18,6 +18,7 @@ export default function UserForm() {
   const [formData, setFormData] = useState<FormData>({
     nomeUsuario: '',
     email: '',
+    nomeMaquina: '',
     departamento: '',
     temHeadset: false,
     headsetDesde: '',
@@ -61,6 +62,7 @@ export default function UserForm() {
     setFormData({
       nomeUsuario: '',
       email: '',
+      nomeMaquina: '',
       departamento: '',
       temHeadset: false,
       headsetDesde: '',
@@ -91,6 +93,17 @@ export default function UserForm() {
             style={{ width: '100%', maxWidth: 720, height: 'auto', borderRadius: 8 }}
             aria-label="Vídeo explicando como ver o nome da máquina"
           />
+
+          {/* Input para nome da máquina */}
+          <div style={{ marginTop: 12, maxWidth: 720, marginLeft: 'auto', marginRight: 'auto' }}>
+            <FormInput
+              id="nomeMaquina"
+              label="Nome da Máquina / Notebook"
+              placeholder="Ex: NT-MAST0123"
+              value={formData.nomeMaquina || ''}
+              onChange={(value) => setFormData({ ...formData, nomeMaquina: value })}
+            />
+          </div>
         </div>
         <p style={{ marginTop: 12, color: '#555', fontSize: 15 }}>
           Dica: basta acessar a barra de pesquisa do Windows e digitar <strong>sistema</strong> para visualizar o nome da máquina.
