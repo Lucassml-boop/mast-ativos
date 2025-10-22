@@ -41,7 +41,7 @@ const menuItems = [
   },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ open }: { open?: boolean }) {
   const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({});
 
   const toggleMenu = (idx: number) => {
@@ -49,7 +49,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${open ? 'open' : ''}`}>
       <nav className="sidebar-menu">
         <ul>
           {menuItems.map((item, idx) => (

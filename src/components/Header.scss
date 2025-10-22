@@ -22,6 +22,15 @@
   color: $primary-color;
 }
 
+.menu-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  color: $primary-color;
+  margin-right: 0.75rem;
+  cursor: pointer;
+}
+
 .header-center {
   flex: 1;
   display: flex;

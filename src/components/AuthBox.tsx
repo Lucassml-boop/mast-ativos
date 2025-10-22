@@ -55,20 +55,23 @@ export default function AuthBox({ open, onClose }: Props) {
 	return createPortal(
 		<div className="authbox-backdrop" onClick={onClose}>
 			<div className="authbox" onClick={(e) => e.stopPropagation()}>
+				<button className="close-btn" onClick={onClose} aria-label="Fechar">✕</button>
 				<div className="tabs">
 					<div className={`tab ${!isRegister ? 'active' : ''}`} onClick={() => setIsRegister(false)}>Login</div>
 					<div className={`tab ${isRegister ? 'active' : ''}`} onClick={() => setIsRegister(true)}>Registrar</div>
 				</div>
 				<h3 style={{ marginTop: 6 }}>{isRegister ? 'Criar nova conta' : 'Acesse sua conta'}</h3>
-				<div style={{ display: 'grid', gap: 10, marginTop: 6 }}>
+				<div className="authbox-form" style={{ display: 'grid', gap: 10, marginTop: 6 }}>
 					<input
 						type="email"
+						className="auth-input"
 						placeholder="email@grupomast.com.br"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						/>
 					<input
 						type="password"
+						className="auth-input"
 						placeholder="Senha"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}

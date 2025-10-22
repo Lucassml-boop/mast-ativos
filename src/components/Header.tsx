@@ -1,4 +1,4 @@
-import { FiBell, FiSettings } from 'react-icons/fi';
+import { FiBell, FiSettings, FiMenu } from 'react-icons/fi';
 import './Header.scss';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
@@ -9,7 +9,7 @@ import AuthBox from './AuthBox';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 
-export default function Header() {
+export default function Header({ onToggleSidebar }: { onToggleSidebar?: () => void }) {
   const { user, loading } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
@@ -51,6 +51,9 @@ export default function Header() {
     <>
       <header className="header">
         <div className="header-left">
+          <button className="menu-toggle" onClick={onToggleSidebar} aria-label="Abrir menu">
+            <FiMenu />
+          </button>
           <span className="logo">Mast Ativos</span>
         </div>
         <div className="header-center">

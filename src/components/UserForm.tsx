@@ -10,6 +10,7 @@ import CheckboxWithDate from './CheckboxWithDate';
 import SimpleCheckbox from './SimpleCheckbox';
 import FormButtons from './FormButtons';
 import { DEPARTAMENTOS } from '../constants/departamentos';
+import usarVideo from '../assets/usar.mp4';
 
 
 export default function UserForm() {
@@ -82,13 +83,14 @@ export default function UserForm() {
       <div className="video-section" style={{ margin: '24px 0', padding: '16px', background: '#f8f8f8', borderRadius: '8px' }}>
         <h2>Como ver o nome da máquina</h2>
         <p>Assista o vídeo abaixo para aprender como encontrar o nome do seu computador no Windows:</p>
-        {/* Adicione o vídeo aqui, por exemplo um iframe do YouTube */}
+        {/* Vídeo local incorporado */}
         <div style={{ textAlign: 'center', marginTop: 12 }}>
-          <div style={{ background: '#ddd', height: 200, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ color: '#666' }}>
-              [Vídeo explicativo aqui]
-            </span>
-          </div>
+          <video
+            src={usarVideo}
+            controls
+            style={{ width: '100%', maxWidth: 720, height: 'auto', borderRadius: 8 }}
+            aria-label="Vídeo explicando como ver o nome da máquina"
+          />
         </div>
         <p style={{ marginTop: 12, color: '#555', fontSize: 15 }}>
           Dica: basta acessar a barra de pesquisa do Windows e digitar <strong>sistema</strong> para visualizar o nome da máquina.

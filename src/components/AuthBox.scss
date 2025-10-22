@@ -17,6 +17,16 @@
   box-shadow: 0 12px 48px rgba(0,0,0,0.18);
 }
 
+.authbox .close-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
 /* Responsive auth modal */
 @media (max-width: 480px) {
   .authbox {
@@ -64,3 +74,16 @@
 .authbox .actions { display: flex; gap: 8px; margin-top: 10px; }
 
 .authbox .meta { color: #666; font-size: 13px; margin-top: 8px; }
+
+.authbox-form { position: relative; }
+.auth-input {
+  padding: 10px 12px;
+  border: 1px solid #e6e9f2;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .authbox { padding-top: 36px; }
+  .authbox .close-btn { top: 8px; right: 8px; }
+}
