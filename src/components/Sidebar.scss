@@ -10,6 +10,27 @@
   box-shadow: $shadow-sm;
 }
 
+/* Responsive: collapse sidebar on small screens */
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 64px;
+    bottom: 0;
+    transform: translateX(-110%);
+    transition: transform 0.25s ease;
+    z-index: 40;
+    width: 260px;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar { width: 220px; }
+}
+
 .sidebar-logo {
   font-family: $font-family;
   font-weight: $font-weight-semibold;

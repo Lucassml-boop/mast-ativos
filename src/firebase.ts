@@ -18,3 +18,12 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
+
+// DEBUG: Expor app e auth no window apenas em modo dev para inspeção no console.
+// REMOVA estas linhas antes de build/produção.
+if (typeof window !== 'undefined' && import.meta.env.DEV) {
+  // @ts-ignore - attach for debugging only
+  window.__FIREBASE_APP = app;
+  // @ts-ignore
+  window.__FIREBASE_AUTH = auth;
+}

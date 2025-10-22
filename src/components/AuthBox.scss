@@ -1,0 +1,66 @@
+/* Minimal styles for the auth modal */
+.authbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.authbox {
+  background: #fff;
+  padding: 20px 18px;
+  border-radius: 10px;
+  width: 420px;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+}
+
+/* Responsive auth modal */
+@media (max-width: 480px) {
+  .authbox {
+    width: calc(100% - 32px);
+    padding: 16px;
+    border-radius: 8px;
+  }
+  .authbox-backdrop { padding: 12px; }
+}
+
+.authbox input {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.authbox h3 {
+  margin: 0 0 12px 0;
+}
+
+.authbox .btn { padding: 8px 12px; }
+
+.authbox .tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.authbox .tab {
+  flex: 1;
+  text-align: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #f4f6fb;
+  font-weight: 600;
+}
+
+.authbox .tab.active {
+  background: #fff;
+  border: 1px solid #e6e9f2;
+  box-shadow: 0 4px 12px rgba(16,24,40,0.06);
+}
+
+.authbox .actions { display: flex; gap: 8px; margin-top: 10px; }
+
+.authbox .meta { color: #666; font-size: 13px; margin-top: 8px; }

@@ -22,3 +22,13 @@
   background: $bg-color;
   min-height: calc(100vh - 64px);
 }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .layout-main { flex-direction: column; }
+  .layout-content { padding: 1.25rem 1rem; min-height: calc(100vh - 56px); }
+}
+
+@media (max-width: 480px) {
+  .layout-content { padding: 1rem 0.75rem; }
+}

@@ -37,6 +37,16 @@ body {
   padding: 0 $spacing-md;
 }
 
+/* Global responsive tweaks */
+@media (max-width: 900px) {
+  .container { max-width: 100%; padding: 0 $spacing-sm; }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+  .container { padding: 0 $spacing-xs; }
+}
+
 .text-center {
   text-align: center;
 }

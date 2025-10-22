@@ -76,3 +76,18 @@
   object-fit: cover;
   background: $white;
 }
+
+/* Responsive header */
+@media (max-width: 900px) {
+  .header { height: 56px; padding: 0 1rem; }
+  .search-input { width: 200px; }
+  .header-right { gap: 0.75rem; }
+}
+
+@media (max-width: 480px) {
+  .header { height: 52px; padding: 0 0.5rem; }
+  .header-left .logo { font-size: 1.05rem; }
+  .search-input { display: none; }
+  .header-center { justify-content: flex-start; }
+  .avatar { width: 34px; height: 34px; }
+}

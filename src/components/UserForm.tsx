@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { db } from '../firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import type { FormEvent } from 'react';
@@ -13,7 +13,7 @@ import { DEPARTAMENTOS } from '../constants/departamentos';
 
 
 export default function UserForm() {
-  // const { user, loading } = useAuth();
+  const { user, loading } = useAuth();
   const [formData, setFormData] = useState<FormData>({
     nomeUsuario: '',
     email: '',
@@ -31,6 +31,11 @@ export default function UserForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (loading) return;
+    if (!user) {
+      alert('Você precisa estar logado para enviar o formulário.');
+      return;
+    }
     // Validação do email
     if (!formData.email.match(/^.+@grupomast\.com\.br$/i)) {
       setEmailError('Use um e-mail válido @grupomast.com.br');

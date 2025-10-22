@@ -8,6 +8,7 @@ import {
   FiBox,
 } from 'react-icons/fi';
 import './Sidebar.scss';
+import { Link } from 'react-router-dom';
 
 const menuItems = [
   {
@@ -21,7 +22,7 @@ const menuItems = [
     link: '#',
     children: [
       { label: 'Cadastro', link: '#' },
-      { label: 'Listagem', link: '#' },
+      { label: 'Listagem', link: '/admin' },
     ],
   },
   {
@@ -69,9 +70,9 @@ export default function Sidebar() {
                 <ul className="submenu">
                   {item.children.map((sub) => (
                     <li key={sub.label}>
-                      <a href={sub.link} className="submenu-item">
+                      <Link to={sub.link} className="submenu-item">
                         {sub.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
