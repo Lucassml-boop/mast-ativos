@@ -28,10 +28,10 @@ const menuItems = [
   {
     label: 'Ativos',
     icon: <FiBox />,
-    link: '#',
+    link: '/ativos',
     children: [
-      { label: 'Novo ativo', link: '#' },
-      { label: 'Inventário', link: '#' },
+      { label: 'Novo ativo', link: '/' },
+      { label: 'Inventário', link: '/ativos' },
     ],
   },
   {
@@ -41,7 +41,7 @@ const menuItems = [
   },
 ];
 
-export default function Sidebar({ open }: { open?: boolean }) {
+export default function Sidebar({ open, onNavigate, onEnsureOpen }: { open?: boolean; onNavigate?: () => void; onEnsureOpen?: () => void }) {
   const [openMenus, setOpenMenus] = useState<{ [key: number]: boolean }>({});
 
   const toggleMenu = (idx: number) => {
@@ -49,14 +49,36 @@ export default function Sidebar({ open }: { open?: boolean }) {
   };
 
   return (
-    <aside className={`sidebar ${open ? 'open' : ''}`}>
+    <aside className={`sidebar ${open ? 'open' : 'closed'}`}>
       <nav className="sidebar-menu">
         <ul>
           {menuItems.map((item, idx) => (
             <li key={item.label}>
               <div
                 className={`menu-item${item.children ? ' has-children' : ''}`}
-                onClick={() => item.children && toggleMenu(idx)}
+                data-label={item.label}
+                role="button"
+                tabIndex={0}
+                onClick={() => {
+                  // If sidebar is closed (compact), clicking should open it and also open submenu
+                  if (!open) {
+                    onEnsureOpen && onEnsureOpen();
+                    if (item.children) toggleMenu(idx);
+                    return;
+                  }
+                  if (item.children) toggleMenu(idx);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    if (!open) {
+                      onEnsureOpen && onEnsureOpen();
+                      if (item.children) toggleMenu(idx);
+                      return;
+                    }
+                    if (item.children) toggleMenu(idx);
+                  }
+                }}
               >
                 <span className="menu-icon">{item.icon}</span>
                 <span className="menu-label">{item.label}</span>
@@ -66,11 +88,11 @@ export default function Sidebar({ open }: { open?: boolean }) {
                   </span>
                 )}
               </div>
-              {item.children && openMenus[idx] && (
-                <ul className="submenu">
+              {item.children && (
+                <ul className={`submenu ${openMenus[idx] ? 'open' : ''}`}>
                   {item.children.map((sub) => (
                     <li key={sub.label}>
-                      <Link to={sub.link} className="submenu-item">
+                      <Link to={sub.link} className="submenu-item" onClick={() => onNavigate && onNavigate()}>
                         {sub.label}
                       </Link>
                     </li>
