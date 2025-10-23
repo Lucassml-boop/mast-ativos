@@ -1,15 +1,33 @@
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, query, where, orderBy } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
 type AtivoDoc = Record<string, any>;
 
-export async function exportAtivosToExcel(filename = 'ativos.xlsx') {
+export async function exportAtivosToExcel(filename = 'ativos.xlsx', filters?: { departamento?: string; from?: Date; to?: Date }) {
   // Busca todos os documentos da coleção 'ativos'
   let snapshot;
   try {
-    snapshot = await getDocs(collection(db, 'ativos'));
+    // build query with optional filters
+    const col = collection(db, 'ativos');
+    let q: any = col;
+    const whereClauses: any[] = [];
+    if (filters?.departamento) {
+      whereClauses.push(where('departamento', '==', filters.departamento));
+    }
+    if (filters?.from) {
+      whereClauses.push(where('createdAt', '>=', filters.from));
+    }
+    if (filters?.to) {
+      whereClauses.push(where('createdAt', '<=', filters.to));
+    }
+    if (whereClauses.length > 0) {
+      q = query(col, ...whereClauses, orderBy('createdAt', 'desc'));
+    } else {
+      q = query(col, orderBy('createdAt', 'desc'));
+    }
+    snapshot = await getDocs(q);
   } catch (err: any) {
     console.error('Erro ao buscar ativos:', err);
     // Mostra mensagem amigável para erros de permissão
@@ -77,7 +95,7 @@ export async function exportAtivosToExcel(filename = 'ativos.xlsx') {
   const rows: AtivoDoc[] = [];
 
   snapshot.forEach((doc) => {
-    rows.push({ id: doc.id, ...doc.data() });
+    rows.push(Object.assign({ id: doc.id }, doc.data() as any));
   });
 
   // Mapear para as colunas desejadas
