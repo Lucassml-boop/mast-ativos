@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { db } from '../firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { db, auth } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import type { FormEvent } from 'react';
 import type { FormData } from '../types/form.types';
 import FormInput from './FormInput';
@@ -38,23 +38,40 @@ export default function UserForm() {
       alert('Você precisa estar logado para enviar o formulário.');
       return;
     }
-    // Validação do email
-    if (!formData.email.match(/^.+@grupomast\.com\.br$/i)) {
+    // Normalizar email e validar
+    const normalized = (formData.email || '').trim().toLowerCase();
+    if (!normalized.match(/^.+@grupomast\.com\.br$/i)) {
       setEmailError('Use um e-mail válido @grupomast.com.br');
+      return;
+    } else if (normalized !== (user.email || '').toLowerCase()) {
+      setEmailError('O e-mail informado deve ser o mesmo do usuário autenticado.');
       return;
     } else {
       setEmailError(null);
     }
     try {
+      // Opcional: forçar refresh do token para evitar problemas de autenticação expirados
+      try {
+        await (auth.currentUser as any)?.getIdToken(true);
+      } catch (e) {
+        console.warn('Não foi possível forçar refresh do token (não crítico):', e);
+      }
+
+      // Log do payload (apenas em dev) - createdAt será preenchido pelo servidor
+      console.debug('Enviar payload ativos:', { ...formData, email: normalized, createdAt: 'serverTimestamp()' });
+
       await addDoc(collection(db, 'ativos'), {
         ...formData,
-        createdAt: Timestamp.now(),
+        email: normalized,
+        createdAt: serverTimestamp(),
       });
       alert('Formulário enviado e salvo no Firebase!');
       handleReset();
     } catch (error) {
-      alert('Erro ao salvar no Firebase. Veja o console.');
-      console.error(error);
+      console.error('Erro salvando ativo:', error);
+      // Mostrar mensagem mais informativa
+      const msg = (error as any)?.code ? `${(error as any).code} - ${(error as any).message}` : 'Erro ao salvar no Firebase. Veja o console.';
+      alert(msg);
     }
   };
 
@@ -102,6 +119,7 @@ export default function UserForm() {
               placeholder="Ex: NT-MAST0123"
               value={formData.nomeMaquina || ''}
               onChange={(value) => setFormData({ ...formData, nomeMaquina: value })}
+              required
             />
           </div>
         </div>
