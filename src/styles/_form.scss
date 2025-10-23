@@ -125,6 +125,33 @@
   border-top: 1px solid $border-color;
 }
 
+/* Filters toolbar */
+.filters {
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: $spacing-md;
+
+  .filters-left {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+  }
+
+  select, input[type="date"] {
+    @include input-base;
+    padding: $spacing-xs $spacing-sm;
+    height: 40px;
+  }
+
+  .filters-actions {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+  }
+}
+
 .btn {
   padding: $spacing-sm $spacing-xl;
   border: none;
